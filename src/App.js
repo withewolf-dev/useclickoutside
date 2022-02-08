@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
+const items = ["cars", "bikes", "cycles", "plane"];
 function App() {
+  const [selectedIndex, setselectedIndex] = useState(0);
+  const [visibility, setvisibility] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="flex justify-center">
+      <div>
+        <button
+          className="bg-slate-300 px-4 h-8 w-16 border-2 border-blue-400 rounded-md"
+          onClick={() => {
+            setvisibility(!visibility);
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          {items[selectedIndex]}
+        </button>
+
+        {items.map((item, index) => (
+          <>
+            {index !== selectedIndex && (
+              <ul
+                className={`  ${visibility ? "invisible" : "visible"}`}
+                key={index}
+              >
+                <li
+                  className="cursor-pointer "
+                  onClick={() => {
+                    setselectedIndex(index);
+                    setvisibility(false);
+                  }}
+                >
+                  {item}
+                </li>
+              </ul>
+            )}
+          </>
+        ))}
+      </div>
     </div>
   );
 }
